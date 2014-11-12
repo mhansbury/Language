@@ -7,8 +7,8 @@
           <xsd:documentation>The OVAL Schema is maintained by The MITRE Corporation and developed by the public OVAL Community. For more information, including how to get involved in the project and how to submit change requests, please visit the OVAL website at http://oval.mitre.org.</xsd:documentation>
           <xsd:appinfo>
                <schema>Linux System Characteristics</schema>
-               <version>5.11 Draft 1</version>
-               <date>2/20/2013 8:00:00 AM</date>
+               <version>5.11 Draft 2</version>
+               <date>9/25/2013 3:41:26 PM</date>
                 <terms_of_use>Copyright (c) 2002-2013, The MITRE Corporation. All rights reserved.  The contents of this file are subject to the terms of the OVAL License located at http://oval.mitre.org/oval/about/termsofuse.html. See the OVAL License for the specific language governing permissions and limitations for use of this schema.  When distributing copies of the OVAL Schema, this license header must be included.</terms_of_use>
                <sch:ns prefix="oval-sc" uri="http://oval.mitre.org/XMLSchema/oval-system-characteristics-5"/>
                <sch:ns prefix="linux-sc" uri="http://oval.mitre.org/XMLSchema/oval-system-characteristics-5#linux"/>
@@ -249,6 +249,7 @@
                               <xsd:element name="mount_options" type="oval-sc:EntityItemStringType" minOccurs="0" maxOccurs="unbounded">
                                    <xsd:annotation>
                                         <xsd:documentation>The mount_options element contains a string that represents a mount option associated with a partition on the local system.</xsd:documentation>
+                                        <xsd:documentation>Implementation note: not all mount options are visible in /etc/mtab or /proc/mounts.  A complete source of additional mount options is the f_flag field of 'struct statvfs'.  See statvfs(2).  /etc/fstab may have additional mount options, but it need not contain all mounted filesystems, so it MUST NOT be relied upon.  Implementers MUST be sure to get all mount options in some way.</xsd:documentation>
                                    </xsd:annotation>
                               </xsd:element>
                               <xsd:element name="total_space" type="oval-sc:EntityItemIntType" minOccurs="0" maxOccurs="1">
@@ -332,7 +333,7 @@
                               </xsd:element>
                               <xsd:element name="version" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
-                                        <xsd:documentation>This is the version number of the build, changed by the vendor/builder. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 21.11.4.</xsd:documentation>
+                                        <xsd:documentation>This is the version number of the build, changed by the vendor/builder. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 2.0.40.</xsd:documentation>
                                    </xsd:annotation>
                                    <xsd:complexType>
                                         <xsd:simpleContent>
@@ -519,7 +520,7 @@
                               </xsd:element>
                               <xsd:element name="version" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
-                                        <xsd:documentation>This is the version number of the build. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 21.11.4.</xsd:documentation>
+                                        <xsd:documentation>This is the version number of the build. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 2.0.40.</xsd:documentation>
                                    </xsd:annotation>
                                    <xsd:complexType>
                                         <xsd:simpleContent>
@@ -682,7 +683,7 @@
                               </xsd:element>
                               <xsd:element name="version" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
-                                        <xsd:documentation>This is the version number of the build. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 21.11.4.</xsd:documentation>
+                                        <xsd:documentation>This is the version number of the build. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 2.0.40.</xsd:documentation>
                                    </xsd:annotation>
                                    <xsd:complexType>
                                         <xsd:simpleContent>
@@ -736,6 +737,18 @@
                               <xsd:element name="digest_check_passed" type="oval-sc:EntityItemBoolType" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
                                         <xsd:documentation>The digest_check_passed entity indicates whether or not the verification of the package or header digests passed. If the digest check is not performed, due to the 'nodigest' behavior, this entity must not be collected.</xsd:documentation>
+                                        <xsd:appinfo>
+                                             <oval:deprecated_info>
+                                                  <oval:version>5.11</oval:version>
+                                                  <oval:reason>The digest_check_passed item entity can not be collected as implemented, and has become irrelevant.</oval:reason>
+                                                  <oval:comment>This item entity has been deprecated and will be removed in version 6.0 of the language.</oval:comment>
+                                             </oval:deprecated_info>
+                                             <sch:pattern id="linux-sc_rpmverifypackage_dicp_dep">
+                                                  <sch:rule context="linux-sc:rpmverifypackage_item/linux-sc:digest_check_passed">
+                                                       <sch:report test="true()">DEPRECATED ELEMENT: <sch:value-of select="name()"/> ID: <sch:value-of select="../@id"/></sch:report>
+                                                  </sch:rule>
+                                             </sch:pattern>
+                                        </xsd:appinfo>
                                    </xsd:annotation>
                               </xsd:element>
                               <xsd:element name="verification_script_successful" type="oval-sc:EntityItemBoolType" minOccurs="0" maxOccurs="1">
@@ -746,6 +759,18 @@
                               <xsd:element name="signature_check_passed" type="oval-sc:EntityItemBoolType" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
                                         <xsd:documentation>The signature_check_passed entity indicates whether or not the verification of the package or header signatures passed. If the signature check is not performed, due to the 'nosignature' behavior, this entity must not be collected.</xsd:documentation>
+                                        <xsd:appinfo>
+                                             <oval:deprecated_info>
+                                                  <oval:version>5.11</oval:version>
+                                                  <oval:reason>The signature_check_passed item entity can not be collected as implemented, and has become irrelevant.</oval:reason>
+                                                  <oval:comment>This item entity has been deprecated and will be removed in version 6.0 of the language.</oval:comment>
+                                             </oval:deprecated_info>
+                                             <sch:pattern id="linux-sc_rpmverifypackage_dicp_dep">
+                                                  <sch:rule context="linux-sc:rpmverifypackage_item/linux-sc:signature_check_passed">
+                                                       <sch:report test="true()">DEPRECATED ELEMENT: <sch:value-of select="name()"/> ID: <sch:value-of select="../@id"/></sch:report>
+                                                  </sch:rule>
+                                             </sch:pattern>
+                                        </xsd:appinfo>
                                    </xsd:annotation>
                               </xsd:element>
                          </xsd:sequence>
@@ -904,6 +929,63 @@
                               <xsd:element name="revision" type="oval-sc:EntityItemStringType" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
                                         <xsd:documentation>This is the revision of the package.</xsd:documentation>
+                                   </xsd:annotation>
+                              </xsd:element>
+                         </xsd:sequence>
+                    </xsd:extension>
+               </xsd:complexContent>
+          </xsd:complexType>
+     </xsd:element>
+     <!-- =============================================================================== -->
+     <!-- =======================  SYSTEMD UNIT DEPENDENCY ITEM  ======================== -->
+     <!-- =============================================================================== -->
+     <xsd:element name="systemdunitdependency_item" substitutionGroup="oval-sc:item">
+          <xsd:annotation>
+               <xsd:documentation>This item stores the dependencies of the systemd unit. Please refer to the individual elements in the schema for more details about what each represents.</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+               <xsd:complexContent>
+                    <xsd:extension base="oval-sc:ItemType">
+                         <xsd:sequence>
+                              <xsd:element name="unit" type="oval-sc:EntityItemStringType" minOccurs="0" maxOccurs="1">
+                                   <xsd:annotation>
+                                        <xsd:documentation>The unit entity refers to the full systemd unit name, which has a form of "$name.$type". For example "cupsd.service". This name is usually also the filename of the unit configuration file located in the /etc/systemd/ and /usr/lib/systemd/ directories.</xsd:documentation>
+                                   </xsd:annotation>
+                              </xsd:element>
+                              <xsd:element name="dependency" type="oval-sc:EntityItemStringType" minOccurs="0" maxOccurs="unbounded">
+                                   <xsd:annotation>
+                                        <xsd:documentation>The dependency entity refers to the name of a unit that was confirmed to be a dependency of the given unit.</xsd:documentation>
+                                   </xsd:annotation>
+                              </xsd:element>
+                         </xsd:sequence>
+                    </xsd:extension>
+               </xsd:complexContent>
+          </xsd:complexType>
+     </xsd:element>
+     <!-- =============================================================================== -->
+     <!-- =======================  SYSTEMD UNIT PROPERTY ITEM  ========================== -->
+     <!-- =============================================================================== -->
+     <xsd:element name="systemdunitproperty_item" substitutionGroup="oval-sc:item">
+          <xsd:annotation>
+               <xsd:documentation>This item stores the properties and values of a systemd unit.</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+               <xsd:complexContent>
+                    <xsd:extension base="oval-sc:ItemType">
+                         <xsd:sequence>
+                              <xsd:element name="unit" type="oval-sc:EntityItemStringType" minOccurs="0" maxOccurs="1">
+                                   <xsd:annotation>
+                                        <xsd:documentation>The unit entity refers to the full systemd unit name, which has a form of "$name.$type". For example "cupsd.service". This name is usually also the filename of the unit configuration file located in the /etc/systemd/ and /usr/lib/systemd/ directories.</xsd:documentation>
+                                   </xsd:annotation>
+                              </xsd:element>
+                              <xsd:element name="property" type="oval-sc:EntityItemStringType" minOccurs="0" maxOccurs="1">
+                                   <xsd:annotation>
+                                        <xsd:documentation>The name of the property associated with a systemd unit.</xsd:documentation>
+                                   </xsd:annotation>
+                              </xsd:element>
+                              <xsd:element name="value" type="oval-sc:EntityItemAnySimpleType" minOccurs="0" maxOccurs="unbounded">
+                                   <xsd:annotation>
+                                        <xsd:documentation>The value of the property associated with a systemd unit. Exactly one value shall be used for all property types except dbus arrays - each array element shall be represented by one value.</xsd:documentation>
                                    </xsd:annotation>
                               </xsd:element>
                          </xsd:sequence>

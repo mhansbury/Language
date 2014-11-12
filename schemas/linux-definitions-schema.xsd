@@ -7,8 +7,8 @@
           <xsd:documentation>The OVAL Schema is maintained by The MITRE Corporation and developed by the public OVAL Community. For more information, including how to get involved in the project and how to submit change requests, please visit the OVAL website at http://oval.mitre.org.</xsd:documentation>
           <xsd:appinfo>
                <schema>Linux Definition</schema>
-               <version>5.11 Draft 1</version>
-               <date>2/20/2013 8:00:00 AM</date>
+               <version>5.11 Draft 2</version>
+               <date>9/25/2013 3:41:26 PM</date>
                 <terms_of_use>Copyright (c) 2002-2013, The MITRE Corporation. All rights reserved.  The contents of this file are subject to the terms of the OVAL License located at http://oval.mitre.org/oval/about/termsofuse.html. See the OVAL License for the specific language governing permissions and limitations for use of this schema.  When distributing copies of the OVAL Schema, this license header must be included.</terms_of_use>
                <sch:ns prefix="oval-def" uri="http://oval.mitre.org/XMLSchema/oval-definitions-5"/>
                <sch:ns prefix="linux-def" uri="http://oval.mitre.org/XMLSchema/oval-definitions-5#linux"/>
@@ -541,6 +541,7 @@
                               <xsd:element name="mount_options" type="oval-def:EntityStateStringType" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
                                         <xsd:documentation>The mount_options element contains a string that represents the mount options associated with a partition.</xsd:documentation>
+                                        <xsd:documentation>Implementation note: not all mount options are visible in /etc/mtab or /proc/mounts.  A complete source of additional mount options is the f_flag field of 'struct statvfs'.  See statvfs(2).  /etc/fstab may have additional mount options, but it need not contain all mounted filesystems, so it MUST NOT be relied upon.  Implementers MUST be sure to get all mount options in some way.</xsd:documentation>
                                    </xsd:annotation>
                               </xsd:element>
                               <xsd:element name="total_space" type="oval-def:EntityStateIntType" minOccurs="0" maxOccurs="1">
@@ -696,7 +697,7 @@
                               </xsd:element>
                               <xsd:element name="version" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
-                                        <xsd:documentation>This is the version number of the build. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 21.11.4.</xsd:documentation>
+                                        <xsd:documentation>This is the version number of the build. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 2.0.40.</xsd:documentation>
                                    </xsd:annotation>
                                    <xsd:complexType>
                                         <xsd:simpleContent>
@@ -798,7 +799,7 @@
      </xsd:element>
      <xsd:element name="rpmverify_object" substitutionGroup="oval-def:object">
           <xsd:annotation>
-               <xsd:documentation>The rpmverify_object element is used by a rpmverity_test to define a set of files within a set of RPMs to verify. Each object extends the standard ObjectType as defined in the oval-definitions-schema and one should refer to the ObjectType description for more information. The common set element allows complex objects to be created using filters and set logic. Again, please refer to the description of the set element in the oval-definitions-schema.</xsd:documentation>
+               <xsd:documentation>The rpmverify_object element is used by a rpmverify_test to define a set of files within a set of RPMs to verify. Each object extends the standard ObjectType as defined in the oval-definitions-schema and one should refer to the ObjectType description for more information. The common set element allows complex objects to be created using filters and set logic. Again, please refer to the description of the set element in the oval-definitions-schema.</xsd:documentation>
                <xsd:appinfo>
                     <sch:pattern id="linux-def_rpmverify_object_verify_filter_state">
                          <sch:rule context="linux-def:rpmverify_object//oval-def:filter">
@@ -1130,7 +1131,7 @@
                                         </xsd:element>
                                         <xsd:element name="version">
                                              <xsd:annotation>
-                                                  <xsd:documentation>This is the version number of the build. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 21.11.4.</xsd:documentation>
+                                                  <xsd:documentation>This is the version number of the build. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 2.0.40.</xsd:documentation>
                                              </xsd:annotation>
                                              <xsd:complexType>
                                                   <xsd:simpleContent>
@@ -1218,7 +1219,7 @@
                               </xsd:element>
                               <xsd:element name="version" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
-                                        <xsd:documentation>This is the version number of the build. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 21.11.4.</xsd:documentation>
+                                        <xsd:documentation>This is the version number of the build. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 2.0.40.</xsd:documentation>
                                    </xsd:annotation>
                                    <xsd:complexType>
                                         <xsd:simpleContent>
@@ -1437,7 +1438,7 @@
      </xsd:element>
      <xsd:element name="rpmverifypackage_object" substitutionGroup="oval-def:object">
           <xsd:annotation>
-               <xsd:documentation>The rpmverifypackage_object element is used by a rpmverity_test to define a set of RPMs to verify. Each object extends the standard ObjectType as defined in the oval-definitions-schema and one should refer to the ObjectType description for more information. The common set element allows complex objects to be created using filters and set logic. Again, please refer to the description of the set element in the oval-definitions-schema.</xsd:documentation>
+               <xsd:documentation>The rpmverifypackage_object element is used by a rpmverify_test to define a set of RPMs to verify. Each object extends the standard ObjectType as defined in the oval-definitions-schema and one should refer to the ObjectType description for more information. The common set element allows complex objects to be created using filters and set logic. Again, please refer to the description of the set element in the oval-definitions-schema.</xsd:documentation>
                <xsd:appinfo>
                     <sch:pattern id="linux-def_rpmverifypackage_object_verify_filter_state">
                          <sch:rule context="linux-def:rpmverifypackage_object//oval-def:filter">
@@ -1486,7 +1487,7 @@
                                         </xsd:element>
                                         <xsd:element name="version">
                                              <xsd:annotation>
-                                                  <xsd:documentation>This is the version number of the build. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 21.11.4.</xsd:documentation>
+                                                  <xsd:documentation>This is the version number of the build. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 2.0.40.</xsd:documentation>
                                              </xsd:annotation>
                                              <xsd:complexType>
                                                   <xsd:simpleContent>
@@ -1569,7 +1570,7 @@
                               </xsd:element>
                               <xsd:element name="version" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
-                                        <xsd:documentation>This is the version number of the build. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 21.11.4.</xsd:documentation>
+                                        <xsd:documentation>This is the version number of the build. In the case of an apache rpm named httpd-2.0.40-21.11.4.i686.rpm, this value would be 2.0.40.</xsd:documentation>
                                    </xsd:annotation>
                                    <xsd:complexType>
                                         <xsd:simpleContent>
@@ -1623,6 +1624,18 @@
                               <xsd:element name="digest_check_passed" type="oval-def:EntityStateBoolType" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
                                         <xsd:documentation>The digest_check_passed entity indicates whether or not the verification of the package or header digests passed. If the digest check is not performed, due to the 'nodigest' behavior, this entity must not be collected.</xsd:documentation>
+                                        <xsd:appinfo>
+                                             <oval:deprecated_info>
+                                                  <oval:version>5.11</oval:version>
+                                                  <oval:reason>The digest_check_passed entity can not be collected as implemented, and has become irrelevant.</oval:reason>
+                                                  <oval:comment>This entity has been deprecated and will be removed in version 6.0 of the language.</oval:comment>
+                                             </oval:deprecated_info>
+                                             <sch:pattern id="linux-def_rpmverifypackage_dicp_dep">
+                                                  <sch:rule context="linux-def:rpmverifypackage_state/linux-def:digest_check_passed">
+                                                       <sch:report test="true()">DEPRECATED ELEMENT: <sch:value-of select="name()"/> ID: <sch:value-of select="../@id"/></sch:report>
+                                                  </sch:rule>
+                                             </sch:pattern>
+                                        </xsd:appinfo>
                                    </xsd:annotation>
                               </xsd:element>
                               <xsd:element name="verification_script_successful" type="oval-def:EntityStateBoolType" minOccurs="0" maxOccurs="1">
@@ -1633,6 +1646,18 @@
                               <xsd:element name="signature_check_passed" type="oval-def:EntityStateBoolType" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
                                         <xsd:documentation>The signature_check_passed entity indicates whether or not the verification of the package or header signatures passed. If the signature check is not performed, due to the 'nosignature' behavior, this entity must not be collected.</xsd:documentation>
+                                        <xsd:appinfo>
+                                             <oval:deprecated_info>
+                                                  <oval:version>5.11</oval:version>
+                                                  <oval:reason>The signature_check_passed entity can not be collected as implemented, and has become irrelevant.</oval:reason>
+                                                  <oval:comment>This entity has been deprecated and will be removed in version 6.0 of the language.</oval:comment>
+                                             </oval:deprecated_info>
+                                             <sch:pattern id="linux-def_rpmverifypackage_scp_dep">
+                                                  <sch:rule context="linux-def:rpmverifypackage_state/linux-def:signature_check_passed">
+                                                       <sch:report test="true()">DEPRECATED ELEMENT: <sch:value-of select="name()"/> ID: <sch:value-of select="../@id"/></sch:report>
+                                                  </sch:rule>
+                                             </sch:pattern>
+                                        </xsd:appinfo>
                                    </xsd:annotation>
                               </xsd:element>
                          </xsd:sequence>
@@ -1652,6 +1677,18 @@
           <xsd:attribute name="nodigest" use="optional" type="xsd:boolean" default="false">
                <xsd:annotation>
                     <xsd:documentation>'nodigest' when true this behavior means, don't verify package or header digests when reading.</xsd:documentation>
+                    <xsd:appinfo>
+                         <oval:deprecated_info>
+                              <oval:version>5.11</oval:version>
+                              <oval:reason>The nodigest behavior has become irrelevant since the element it impacts has been deprecated.</oval:reason>
+                              <oval:comment>This test has been deprecated and will be removed in version 6.0 of the language.</oval:comment>
+                         </oval:deprecated_info>
+                         <sch:pattern id="linux-def_rpmverifypackage_nodi_beh_dep">
+                              <sch:rule context="linux-def:rpmverifypackage_object/linux-def:behaviors/@nodigest">
+                                   <sch:report test="true()">DEPRECATED BEHAVIOR: <sch:value-of select="name()"/> ID: <sch:value-of select="../../@id"/></sch:report>
+                              </sch:rule>
+                         </sch:pattern>
+                    </xsd:appinfo>
                </xsd:annotation>
           </xsd:attribute>
           <xsd:attribute name="noscripts" use="optional" type="xsd:boolean" default="false">
@@ -1662,6 +1699,18 @@
           <xsd:attribute name="nosignature" use="optional" type="xsd:boolean" default="false">
                <xsd:annotation>
                     <xsd:documentation>'nosignature' when true this behavior means, don't verify package or header signatures when reading.</xsd:documentation>
+                    <xsd:appinfo>
+                         <oval:deprecated_info>
+                              <oval:version>5.11</oval:version>
+                              <oval:reason>The nosignature behavior has become irrelevant since the element it impacts has been deprecated.</oval:reason>
+                              <oval:comment>This test has been deprecated and will be removed in version 6.0 of the language.</oval:comment>
+                         </oval:deprecated_info>
+                         <sch:pattern id="linux-def_rpmverifypackage_nosi_beh_dep">
+                              <sch:rule context="linux-def:rpmverifypackage_object/linux-def:behaviors/@nosignature">
+                                   <sch:report test="true()">DEPRECATED BEHAVIOR: <sch:value-of select="name()"/> ID: <sch:value-of select="../../@id"/></sch:report>
+                              </sch:rule>
+                         </sch:pattern>
+                    </xsd:appinfo>
                </xsd:annotation>
           </xsd:attribute>
      </xsd:complexType>
@@ -1837,7 +1886,7 @@
                                                                       <sch:assert test="not(preceding-sibling::linux-def:behaviors[@max_depth or @recurse or @recurse_direction])"><sch:value-of select="../@id"/> - the max_depth, recurse, and recurse_direction behaviors are not allowed with a filepath entity</sch:assert>
                                                                  </sch:rule>
                                                             </sch:pattern>
-                                                            <sch:pattern id="unix-def_selinuxsecuritycontext_objectfilepath2">
+                                                            <sch:pattern id="linux-def_selinuxsecuritycontext_objectfilepath2">
                                                                  <sch:rule context="linux-def:selinuxsecuritycontext_object/linux-def:filepath[not(@operation='equals' or not(@operation))]">
                                                                       <sch:assert test="not(preceding-sibling::linux-def:behaviors[@recurse_file_system='defined'])"><sch:value-of select="../@id"/> - the recurse_file_system behavior MUST not be set to 'defined' when a pattern match is used with a filepath entity.</sch:assert>
                                                                  </sch:rule>
@@ -2084,6 +2133,208 @@
           </xsd:complexType>
      </xsd:element>
      <!-- =============================================================================== -->
+     <!-- ======================  SYSTEMD UNIT DEPENDENCY TEST  ========================= -->
+     <!-- =============================================================================== -->
+     <xsd:element name="systemdunitdependency_test" substitutionGroup="oval-def:test">
+          <xsd:annotation>
+               <xsd:documentation>The systemdunitdependency_test is used to retrieve information about dependencies of a single systemd unit in the form of a list. This list contains all dependencies, including transitive dependencies. For more information see the output generated by systemctl list-dependencies --plain $unit. It extends the standard TestType as defined in the oval-definitions-schema and one should refer to the TestType description for more information. The required object element references a systemdunitdependency_object and the optional state element specifies the data to check.</xsd:documentation>
+               <xsd:appinfo>
+                    <oval:element_mapping>
+                         <oval:test>systemdunitdependency_test</oval:test>
+                         <oval:object>systemdunitdependency_object</oval:object>
+                         <oval:state>systemdunitdependency_state</oval:state>
+                         <oval:item target_namespace="http://oval.mitre.org/XMLSchema/oval-system-characteristics-5#linux">systemdunitdependency_item</oval:item>
+                    </oval:element_mapping>
+               </xsd:appinfo>
+               <xsd:appinfo>
+                    <sch:pattern id="linux-def_systemdunitdependencytst">
+                         <sch:rule context="linux-def:systemdunitdependency_test/linux-def:object">
+                              <sch:assert test="@object_ref=ancestor::oval-def:oval_definitions/oval-def:objects/linux-def:systemdunitdependency_object/@id"><sch:value-of select="../@id"/> - the object child element of a systemdunitdependency_test must reference a systemdunitdependency_object</sch:assert>
+                         </sch:rule>
+                         <sch:rule context="linux-def:systemdunitdependency_test/linux-def:state">
+                              <sch:assert test="@state_ref=ancestor::oval-def:oval_definitions/oval-def:states/linux-def:systemdunitdependency_state/@id"><sch:value-of select="../@id"/> - the state child element of a systemdunitdependency_test must reference a systemdunitdependency_state</sch:assert>
+                         </sch:rule>
+                    </sch:pattern>
+               </xsd:appinfo>
+          </xsd:annotation>
+          <xsd:complexType>
+               <xsd:complexContent>
+                    <xsd:extension base="oval-def:TestType">
+                         <xsd:sequence>
+                              <xsd:element name="object" type="oval-def:ObjectRefType" />
+                              <xsd:element name="state" type="oval-def:StateRefType" minOccurs="0" maxOccurs="unbounded"/>
+                         </xsd:sequence>
+                    </xsd:extension>
+               </xsd:complexContent>
+          </xsd:complexType>
+     </xsd:element>
+     <xsd:element name="systemdunitdependency_object" substitutionGroup="oval-def:object">
+          <xsd:annotation>
+               <xsd:documentation>The systemdunitdependency_object element is used by a systemdunitdependency_test to define the specific units to check the dependencies of. Each object extends the standard ObjectType as defined in the oval-definitions-schema and one should refer to the ObjectType description for more information. The common set element allows complex objects to be created using filters and set logic. Again, please refer to the description of the set element in the oval-definitions-schema.</xsd:documentation>
+               <xsd:appinfo>
+                    <sch:pattern id="linux-def_object_verify_filter_state">
+                         <sch:rule context="linux-def:systemdunitdependency_object//oval-def:filter">
+                              <sch:let name="parent_object" value="ancestor::linux-def:systemdunitdependency_object"/>
+                              <sch:let name="parent_object_id" value="$parent_object/@id"/>
+                              <sch:let name="state_ref" value="."/>
+                              <sch:let name="reffed_state" value="ancestor::oval-def:oval_definitions/oval-def:states/*[@id=$state_ref]"/>
+                              <sch:let name="state_name" value="local-name($reffed_state)"/>
+                              <sch:let name="state_namespace" value="namespace-uri($reffed_state)"/>
+                              <sch:assert test="(($state_namespace='http://oval.mitre.org/XMLSchema/oval-definitions-5#linux') and ($state_name='systemdunitdependency_state'))">State referenced in filter for <sch:value-of select="name($parent_object)"/> '<sch:value-of select="$parent_object_id"/>' is of the wrong type. </sch:assert>
+                         </sch:rule>
+                    </sch:pattern>
+               </xsd:appinfo>
+          </xsd:annotation>
+          <xsd:complexType>
+               <xsd:complexContent>
+                    <xsd:extension base="oval-def:ObjectType">
+                         <xsd:sequence>
+                              <xsd:choice>
+                                   <xsd:element ref="oval-def:set"/>
+                                   <xsd:sequence>
+                                        <xsd:element name="unit" type="oval-def:EntityObjectStringType">
+                                             <xsd:annotation>
+                                                  <xsd:documentation>The unit entity refers to the full systemd unit name, which has a form of "$name.$type". For example "cupsd.service". This name is usually also the filename of the unit configuration file located in the /etc/systemd/ and /usr/lib/systemd/ directories.</xsd:documentation>
+                                             </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element ref="oval-def:filter" minOccurs="0" maxOccurs="unbounded"/>
+                                   </xsd:sequence>
+                              </xsd:choice>
+                         </xsd:sequence>
+                    </xsd:extension>
+               </xsd:complexContent>
+          </xsd:complexType>
+     </xsd:element>
+     <xsd:element name="systemdunitdependency_state" substitutionGroup="oval-def:state">
+          <xsd:annotation>
+               <xsd:documentation>The systemdunitdependency_state element holds dependencies of a specific systemd unit. Please refer to the individual elements in the schema for more details about what each represents.</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+               <xsd:complexContent>
+                    <xsd:extension base="oval-def:StateType">
+                         <xsd:sequence>
+                              <xsd:element name="unit" type="oval-def:EntityStateStringType" minOccurs="0" maxOccurs="1">
+                                   <xsd:annotation>
+                                        <xsd:documentation>The unit entity refers to the full systemd unit name, which has a form of "$name.$type". For example "cupsd.service". This name is usually also the filename of the unit configuration file located in the /etc/systemd/ and /usr/lib/systemd/ directories.</xsd:documentation>
+                                   </xsd:annotation>
+                              </xsd:element>
+                              <xsd:element name="dependency" type="oval-def:EntityStateStringType" minOccurs="0" maxOccurs="1">
+                                   <xsd:annotation>
+                                        <xsd:documentation>The dependency entity refers to the name of a unit that was confirmed to be a dependency of the given unit.</xsd:documentation>
+                                   </xsd:annotation>
+                              </xsd:element>
+                         </xsd:sequence>
+                    </xsd:extension>
+               </xsd:complexContent>
+          </xsd:complexType>
+     </xsd:element>
+     <!-- =============================================================================== -->
+     <!-- =======================  SYSTEMD UNIT PROPERTY TEST  ========================== -->
+     <!-- =============================================================================== -->
+     <xsd:element name="systemdunitproperty_test" substitutionGroup="oval-def:test">
+          <xsd:annotation>
+               <xsd:documentation>The systemdunitproperty_test is used to retrieve information about systemd units in form of properties. For more information see the output generated by systemctl show $unit. It extends the standard TestType as defined in the oval-definitions-schema and one should refer to the TestType description for more information. The required object element references a systemdunitproperty_object and the optional state element specifies the data to check.</xsd:documentation>
+               <xsd:appinfo>
+                    <oval:element_mapping>
+                         <oval:test>systemdunitproperty_test</oval:test>
+                         <oval:object>systemdunitproperty_object</oval:object>
+                         <oval:state>systemdunitproperty_state</oval:state>
+                         <oval:item>systemdunitproperty_item</oval:item>
+                    </oval:element_mapping>
+               </xsd:appinfo>
+               <xsd:appinfo>
+                    <sch:pattern id="linux-def_systemdunitpropertytst">
+                         <sch:rule context="linux-def:systemdunitproperty_test/linux-def:object">
+                              <sch:assert test="@object_ref=ancestor::oval-def:oval_definitions/oval-def:objects/linux-def:systemdunitproperty_object/@id"><sch:value-of select="../@id"/> - the object child element of a systemdunitproperty_test must reference a systemdunitproperty_object</sch:assert>
+                         </sch:rule>
+                         <sch:rule context="linux-def:systemdunitproperty_test/linux-def:state">
+                              <sch:assert test="@state_ref=ancestor::oval-def:oval_definitions/oval-def:states/linux-def:systemdunitproperty_state/@id"><sch:value-of select="../@id"/> - the state child element of a systemdunitproperty_test must reference a systemdunitproperty_state</sch:assert>
+                         </sch:rule>
+                    </sch:pattern>
+               </xsd:appinfo>
+          </xsd:annotation>
+          <xsd:complexType>
+               <xsd:complexContent>
+                    <xsd:extension base="oval-def:TestType">
+                         <xsd:sequence>
+                              <xsd:element name="object" type="oval-def:ObjectRefType" />
+                              <xsd:element name="state" type="oval-def:StateRefType" minOccurs="0" maxOccurs="unbounded"/>
+                         </xsd:sequence>
+                    </xsd:extension>
+               </xsd:complexContent>
+          </xsd:complexType>
+     </xsd:element>
+     <xsd:element name="systemdunitproperty_object" substitutionGroup="oval-def:object">
+          <xsd:annotation>
+               <xsd:documentation>The systemdunitproperty_object element is used by a systemdunitproperty_test to define the specific unit and property combination to be evaluated. Each object extends the standard ObjectType as defined in the oval-definitions-schema and one should refer to the ObjectType description for more information. The common set element allows complex objects to be created using filters and set logic. Again, please refer to the description of the set element in the oval-definitions-schema.</xsd:documentation>
+               <xsd:appinfo>
+                    <sch:pattern id="linux-def_systemdunitproperty_object_verify_filter_state">
+                         <sch:rule context="linux-def:systemdunitproperty_object//oval-def:filter">
+                              <sch:let name="parent_object" value="ancestor::linux-def:systemdunitproperty_object"/>
+                              <sch:let name="parent_object_id" value="$parent_object/@id"/>
+                              <sch:let name="state_ref" value="."/>
+                              <sch:let name="reffed_state" value="ancestor::oval-def:oval_definitions/oval-def:states/*[@id=$state_ref]"/>
+                              <sch:let name="state_name" value="local-name($reffed_state)"/>
+                              <sch:let name="state_namespace" value="namespace-uri($reffed_state)"/>
+                              <sch:assert test="(($state_namespace='http://oval.mitre.org/XMLSchema/oval-definitions-5#linux') and ($state_name='systemdunitproperty_state'))">State referenced in filter for <sch:value-of select="name($parent_object)"/> '<sch:value-of select="$parent_object_id"/>' is of the wrong type. </sch:assert>
+                         </sch:rule>
+                    </sch:pattern>
+               </xsd:appinfo>
+          </xsd:annotation>
+          <xsd:complexType>
+               <xsd:complexContent>
+                    <xsd:extension base="oval-def:ObjectType">
+                         <xsd:sequence>
+                              <xsd:choice>
+                                   <xsd:element ref="oval-def:set"/>
+                                   <xsd:sequence>
+                                        <xsd:element name="unit" type="oval-def:EntityObjectStringType">
+                                             <xsd:annotation>
+                                                  <xsd:documentation>The unit entity refers to the full systemd unit name, which has a form of "$name.$type". For example "cupsd.service". This name is usually also the filename of the unit configuration file located in the /etc/systemd/ and /usr/lib/systemd/ directories.</xsd:documentation>
+                                             </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element name="property" type="oval-def:EntityObjectStringType">
+                                             <xsd:annotation>
+                                                  <xsd:documentation>The property entity refers to the systemd unit property that we are interested in.</xsd:documentation>
+                                             </xsd:annotation>
+                                        </xsd:element>
+                                        <xsd:element ref="oval-def:filter" minOccurs="0" maxOccurs="unbounded"/>
+                                   </xsd:sequence>
+                              </xsd:choice>
+                         </xsd:sequence>
+                    </xsd:extension>
+               </xsd:complexContent>
+          </xsd:complexType>
+     </xsd:element>
+     <xsd:element name="systemdunitproperty_state" substitutionGroup="oval-def:state">
+          <xsd:annotation>
+               <xsd:documentation>The systemdunitproperty_state element holds information about properties of a specific systemd unit. Please refer to the individual elements in the schema for more details about what each represents.</xsd:documentation>
+          </xsd:annotation>
+          <xsd:complexType>
+               <xsd:complexContent>
+                    <xsd:extension base="oval-def:StateType">
+                         <xsd:sequence>
+                              <xsd:element name="unit" type="oval-def:EntityStateStringType" minOccurs="0" maxOccurs="1">
+                                   <xsd:annotation>
+                                        <xsd:documentation>The unit entity refers to the full systemd unit name, which has a form of "$name.$type". For example "cupsd.service". This name is usually also the filename of the unit configuration file located in the /etc/systemd/ and /usr/lib/systemd/ directories.</xsd:documentation>
+                                   </xsd:annotation>
+                              </xsd:element>
+                              <xsd:element name="property" type="oval-def:EntityStateStringType" minOccurs="0" maxOccurs="1">
+                                   <xsd:annotation>
+                                        <xsd:documentation>The name of the property associated with a systemd unit.</xsd:documentation>
+                                   </xsd:annotation>
+                              </xsd:element>
+                              <xsd:element name="value" type="oval-def:EntityStateAnySimpleType" minOccurs="0" maxOccurs="1">
+                                   <xsd:annotation>
+                                        <xsd:documentation>The value of the property associated with a systemd unit.</xsd:documentation>
+                                   </xsd:annotation>
+                              </xsd:element>
+                         </xsd:sequence>
+                    </xsd:extension>
+               </xsd:complexContent>
+          </xsd:complexType>
+     </xsd:element>
+     <!-- =============================================================================== -->
      <!-- =============================================================================== -->
      <!-- =============================================================================== -->
      <xsd:complexType name="FileBehaviors">
@@ -2132,7 +2383,7 @@
           </xsd:attribute>
           <xsd:attribute name="recurse_file_system" use="optional" default="all">
                <xsd:annotation>
-                    <xsd:documentation>'recurse_file_system' defines the file system limitation of any searching and applies to all operations as specified on the path or filepath entity. The value of 'local' limits the search scope to local file systems (as opposed to file systems mounted from an external system). The value of 'defined' keeps any recursion within the file system that the file_object (path+filename or filepath) has specified. The value of 'defined' only applies when an equality operation is used for searching because the path or filepath entity must explicitly define a file system. The default value is 'all' meaning to search all available file systems for data collection.</xsd:documentation>
+                    <xsd:documentation>'recurse_file_system' defines the file system limitation of any searching and applies to all operations as specified on the path or filepath entity. The value of 'local' limits the search scope to local file systems (as opposed to file systems mounted from an external system). The value of 'defined' keeps any recursion within the file system that the file_object (path+filename or filepath) has specified.  For example, if the path specified was "/", you would search only the filesystem mounted there, not other filesystems mounted to descendant paths. The value of 'defined' only applies when an equality operation is used for searching because the path or filepath entity must explicitly define a file system. The default value is 'all' meaning to search all available file systems for data collection.</xsd:documentation>
                     <xsd:documentation>Note that in most cases it is recommended that the value of 'local' be used to ensure that file system searching is limited to only the local file systems. Searching 'all' file systems may have performance implications.</xsd:documentation>
                </xsd:annotation>
                <xsd:simpleType>

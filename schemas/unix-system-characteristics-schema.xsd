@@ -6,8 +6,8 @@
           <xsd:documentation>The OVAL Schema is maintained by The MITRE Corporation and developed by the public OVAL Community. For more information, including how to get involved in the project and how to submit change requests, please visit the OVAL website at http://oval.mitre.org.</xsd:documentation>
           <xsd:appinfo>
                <schema>Unix System Characteristics</schema>
-               <version>5.11 Draft 1</version>
-               <date>2/20/2013 8:00:00 AM</date>
+               <version>5.11 Draft 2</version>
+               <date>9/25/2013 3:41:26 PM</date>
                 <terms_of_use>Copyright (c) 2002-2013, The MITRE Corporation. All rights reserved.  The contents of this file are subject to the terms of the OVAL License located at http://oval.mitre.org/oval/about/termsofuse.html. See the OVAL License for the specific language governing permissions and limitations for use of this schema.  When distributing copies of the OVAL Schema, this license header must be included.</terms_of_use>
                <sch:ns prefix="oval-sc" uri="http://oval.mitre.org/XMLSchema/oval-system-characteristics-5"/>
                <sch:ns prefix="unix-sc" uri="http://oval.mitre.org/XMLSchema/oval-system-characteristics-5#unix"/>
@@ -169,7 +169,7 @@
                               </xsd:element>
                               <xsd:element name="has_extended_acl" type="oval-sc:EntityItemBoolType" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
-                                        <xsd:documentation>Does the file or directory have ACL permissions applied to it? If the file or directory doesn't have an ACL, or it matches the standard UNIX permissions, the value will be 'false'. Otherwise, if a file or directory has an ACL, the value will be 'true'. If the system does not support ACLs, the status will be 'does not exist' and if the system supports ACLs, the status will be 'exists'.</xsd:documentation>
+                                        <xsd:documentation>Does the file or directory have ACL permissions applied to it? If a system supports ACLs and the file or directory doesn't have an ACL, or it matches the standard UNIX permissions, the entity will have a status of 'exists' and a value of 'false'. If the system supports ACLs and the file or directory has an ACL, the entity will have a status of 'exists' and a value of 'true'. Lastly, if a system doesn't support ACLs, the entity will have a status of 'does not exist'. </xsd:documentation>
                                    </xsd:annotation>
                               </xsd:element>
                          </xsd:sequence>
@@ -302,17 +302,17 @@
                               </xsd:element>
                               <xsd:element name="server_arguments" type="oval-sc:EntityItemStringType" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
-                                        <xsd:documentation/>
+                                        <xsd:documentation>The arguments for running the service.  These are either passed to the server program invoked by inetd, or used to configure a service provided by inetd.  In the case of server programs, the arguments shall begin with argv[0], which is typically the name of the program.  In the case of a service provided by inted, the first argument shall be the word "internal".</xsd:documentation>
                                    </xsd:annotation>
                               </xsd:element>
                               <xsd:element name="endpoint_type" type="unix-sc:EntityItemEndpointType" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
-                                        <xsd:documentation/>
+                                        <xsd:documentation>The endpoint type (aka, socket type) associated with the service.</xsd:documentation>
                                    </xsd:annotation>
                               </xsd:element>
                               <xsd:element name="exec_as_user" type="oval-sc:EntityItemStringType" minOccurs="0" maxOccurs="1">
                                    <xsd:annotation>
-                                        <xsd:documentation/>
+                                        <xsd:documentation>The user id of the user the server program should run under.  (This allows for running with less permission than root.)</xsd:documentation>
                                    </xsd:annotation>
                               </xsd:element>
                               <xsd:element name="wait_status" type="unix-sc:EntityItemWaitStatusType" minOccurs="0" maxOccurs="1">
